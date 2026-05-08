@@ -78,14 +78,16 @@
         <input type="number" id="input-amount" placeholder="금액" min="1" onkeydown="if(event.key==='Enter')addTransaction()">
         <button class="btn-blue" onclick="addTransaction()">+ 추가</button>
       </div>
-      <table>
-        <thead>
-          <tr>
-            <th>날짜</th><th>내용</th><th>카테고리</th><th>구분</th><th>금액</th><th></th>
-          </tr>
-        </thead>
-        <tbody id="transaction-list"></tbody>
-      </table>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>날짜</th><th>내용</th><th>카테고리</th><th>구분</th><th>금액</th><th></th>
+            </tr>
+          </thead>
+          <tbody id="transaction-list"></tbody>
+        </table>
+      </div>
       <div id="ledger-empty" class="empty-state" style="display:none">
         <div class="empty-icon">📭</div>
         <p>이번 달 거래 내역이 없습니다.</p>

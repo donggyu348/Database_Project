@@ -363,3 +363,38 @@ footer {
   .stats { padding: 34px 22px; gap: 36px; flex-wrap: wrap; }
   .features, .cta { padding: 72px 22px; }
 }
+
+@media (max-width: 680px) {
+  nav {
+    padding: 10px 14px;
+    height: auto;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .nav-logo { font-size: 18px; }
+  .nav-links { gap: 14px; order: 3; width: 100%; justify-content: flex-start; }
+  .nav-actions { margin-left: auto; }
+  .btn-login, .btn-start { padding: 8px 14px; font-size: 13px; }
+
+  .hero { padding: 104px 14px 44px; gap: 26px; }
+  .hero-text h1 { font-size: 34px; }
+  .hero-text p { font-size: 15px; margin-bottom: 26px; max-width: 100%; }
+  .btn-hero-primary, .btn-hero-secondary {
+    width: 100%;
+    justify-content: center;
+    text-align: center;
+    padding: 14px 18px;
+  }
+
+  .mockup-wrapper { width: 100%; max-width: 320px; height: auto; }
+  .phone { width: min(220px, 70vw); height: calc(min(220px, 70vw) * 1.9); }
+  .phone-screen { padding-top: 30px; }
+
+  .stats { padding: 26px 14px; gap: 18px; }
+  .stat-value { font-size: 28px; }
+
+  .features, .cta { padding: 58px 14px; }
+  .section-title { font-size: 26px; }
+  .cta h2 { font-size: 28px; }
+  .cta p { font-size: 15px; }
+}

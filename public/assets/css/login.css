@@ -118,3 +118,18 @@ body {
   min-height: 18px;
 }
 
+@media (max-width: 480px) {
+  body {
+    align-items: flex-start;
+    padding: 18px 14px;
+  }
+
+  .container {
+    padding: 28px 18px 20px;
+    border-radius: 14px;
+  }
+
+  .logo h1 { font-size: 24px; }
+  .tab { font-size: 14px; padding: 12px 8px; }
+  .form-group input { font-size: 16px; }
+}
