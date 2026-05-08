@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>가계부 앱</title>
+  <link rel="stylesheet" href="/assets/css/app.css">
+</head>
+<body>
+
+<header>
+  <div class="logo">가계부</div>
+  <div class="user-info">
+    <span id="header-name"></span>
+    <span id="header-badge" class="badge-expert" style="display:none">🏆 고수</span>
+    <button class="logout-btn" onclick="logout()">로그아웃</button>
+  </div>
+</header>
+
+<nav class="tab-nav">
+  <button class="tab-btn active" onclick="switchTab('ledger',this)">📒 가계부</button>
+  <button class="tab-btn" onclick="switchTab('ranking',this)">🏆 랭킹</button>
+  <button class="tab-btn" onclick="switchTab('community',this)">💬 커뮤니티</button>
+  <button class="tab-btn" onclick="switchTab('party',this)">🛒 공동구매</button>
+</nav>
+
+<!-- ── 가계부 ── -->
+<div id="section-ledger" class="section active">
+  <div class="controls-row">
+    <input type="month" id="ledger-month" onchange="renderLedger()">
+    <span style="font-size:13px;color:#888;">월 예산:</span>
+    <input type="number" id="budget-input" placeholder="금액 (원)" min="1">
+    <button class="btn-blue" onclick="saveBudget()">저장</button>
+  </div>
+
+  <div class="summary-row">
+    <div class="card summary-card income">
+      <h3>이번 달 수입</h3>
+      <div class="amount" id="s-income">0 원</div>
+    </div>
+    <div class="card summary-card expense">
+      <h3>이번 달 지출</h3>
+      <div class="amount" id="s-expense">0 원</div>
+    </div>
+    <div class="card summary-card balance">
+      <h3>잔액</h3>
+      <div class="amount" id="s-balance">0 원</div>
+    </div>
+    <div class="card summary-card budget-card">
+      <h3>예산 소진율</h3>
+      <div class="amount" id="s-budget-rate">미설정</div>
+      <div class="budget-bar-wrap">
+        <div class="budget-bar" id="s-budget-bar" style="width:0%"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="ledger-layout">
+    <div class="ledger-left card">
+      <h2 style="font-size:17px;margin-bottom:16px;">거래 내역</h2>
+      <div class="add-form">
+        <input type="date" id="input-date">
+        <input type="text" id="input-desc" placeholder="내용" onkeydown="if(event.key==='Enter')addTransaction()">
+        <select id="input-category">
+          <option value="식비">식비</option>
+          <option value="교통">교통</option>
+          <option value="쇼핑">쇼핑</option>
+          <option value="의료">의료</option>
+          <option value="통신">통신</option>
+          <option value="주거">주거</option>
+          <option value="급여">급여</option>
+          <option value="기타">기타</option>
+        </select>
+        <select id="input-type">
+          <option value="expense">지출</option>
+          <option value="income">수입</option>
+        </select>
+        <input type="number" id="input-amount" placeholder="금액" min="1" onkeydown="if(event.key==='Enter')addTransaction()">
+        <button class="btn-blue" onclick="addTransaction()">+ 추가</button>
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th>날짜</th><th>내용</th><th>카테고리</th><th>구분</th><th>금액</th><th></th>
+          </tr>
+        </thead>
+        <tbody id="transaction-list"></tbody>
+      </table>
+      <div id="ledger-empty" class="empty-state" style="display:none">
+        <div class="empty-icon">📭</div>
+        <p>이번 달 거래 내역이 없습니다.</p>
+      </div>
+    </div>
+
+    <div class="ledger-right card chart-section">
+      <h2>카테고리별 지출</h2>
+      <div id="category-chart"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ── 랭킹 ── -->
+<div id="section-ranking" class="section">
+  <div class="section-h2">이번 달 절약 랭킹</div>
+  <div class="section-sub" id="ranking-month-label"></div>
+
+  <div class="my-rank-card">
+    <div class="rank-number" id="my-rank-num">-</div>
+    <div class="rank-info">
+      <h2 id="my-rank-name"></h2>
+      <p id="my-rank-expense"></p>
+      <p id="my-rank-desc"></p>
+    </div>
+    <div class="rank-emoji" id="my-rank-emoji"></div>
+  </div>
+
+  <div class="card" style="padding:0;overflow:hidden;">
+    <ul class="ranking-list" id="ranking-list"></ul>
+  </div>
+</div>
+
+<!-- ── 커뮤니티 ── -->
+<div id="section-community" class="section">
+  <div class="section-header">
+    <div>
+      <div class="section-h2">절약 비법 커뮤니티</div>
+      <div class="section-sub">고수들의 절약 노하우를 공유하는 공간</div>
+    </div>
+    <button class="btn-blue" id="btn-write" onclick="openPostModal()">✏️ 글쓰기</button>
+  </div>
+  <div id="no-perm-banner" class="no-perm-banner" style="display:none">
+    🏆 랭킹 10위 안에 들면 절약 비법을 공유할 수 있어요! 지출을 줄여 고수 뱃지를 획득해보세요.
+  </div>
+  <div id="post-list"></div>
+</div>
+
+<!-- ── 공동구매 ── -->
+<div id="section-party" class="section">
+  <div class="section-header">
+    <div>
+      <div class="section-h2">공동구매 파티</div>
+      <div class="section-sub">함께 사면 저렴하게! 파티에 참여하거나 직접 만들어보세요</div>
+    </div>
+    <button class="btn-blue" onclick="openPartyModal()">+ 파티 만들기</button>
+  </div>
+  <div class="filter-row">
+    <button class="filter-btn active" onclick="setFilter('all',this)">전체</button>
+    <button class="filter-btn" onclick="setFilter('open',this)">모집중</button>
+    <button class="filter-btn" onclick="setFilter('mine',this)">내 파티</button>
+  </div>
+  <div class="party-grid" id="party-grid"></div>
+</div>
+
+<!-- 글쓰기 모달 -->
+<div class="modal-overlay" id="modal-post">
+  <div class="modal">
+    <div class="modal-head">
+      <h2>절약 비법 공유</h2>
+      <button class="modal-close" onclick="closeModal('modal-post')">✕</button>
+    </div>
+    <div class="form-group">
+      <label>제목</label>
+      <input type="text" id="post-title" placeholder="절약 비법 제목을 입력하세요">
+    </div>
+    <div class="form-group">
+      <label>내용</label>
+      <textarea id="post-content" placeholder="여러분의 절약 노하우를 자세히 공유해주세요!"></textarea>
+    </div>
+    <button class="btn-submit" onclick="submitPost()">게시하기</button>
+  </div>
+</div>
+
+<!-- 게시글 상세 모달 -->
+<div class="modal-overlay" id="modal-post-detail">
+  <div class="modal">
+    <div class="modal-head">
+      <span></span>
+      <button class="modal-close" onclick="closeModal('modal-post-detail')">✕</button>
+    </div>
+    <div class="detail-title" id="detail-title"></div>
+    <div class="detail-author-row">
+      <span id="detail-author"></span>
+      <span class="badge-expert-sm" id="detail-badge" style="display:none">🏆 고수</span>
+      <span class="detail-date" id="detail-date"></span>
+    </div>
+    <div class="detail-content" id="detail-content"></div>
+    <button class="like-btn" id="detail-like-btn"></button>
+  </div>
+</div>
+
+<!-- 파티 만들기 모달 -->
+<div class="modal-overlay" id="modal-party">
+  <div class="modal">
+    <div class="modal-head">
+      <h2>공동구매 파티 만들기</h2>
+      <button class="modal-close" onclick="closeModal('modal-party')">✕</button>
+    </div>
+    <div class="form-group">
+      <label>파티 제목</label>
+      <input type="text" id="p-title" placeholder="예: 냉동삼겹살 공동구매">
+    </div>
+    <div class="form-group">
+      <label>구매 상품</label>
+      <input type="text" id="p-item" placeholder="예: 냉동삼겹살 2kg (코스트코)">
+    </div>
+    <div class="form-group">
+      <label>설명</label>
+      <textarea id="p-desc" style="min-height:80px;" placeholder="상품 정보, 수령 방법, 지역 등을 적어주세요"></textarea>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label>인당 가격 (원)</label>
+        <input type="number" id="p-price" placeholder="15000" min="1">
+      </div>
+      <div class="form-group">
+        <label>모집 인원 (본인 포함)</label>
+        <input type="number" id="p-count" placeholder="4" min="2" max="20">
+      </div>
+    </div>
+    <button class="btn-submit" onclick="createParty()">파티 만들기</button>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script src="/assets/js/app.js"></script>
+</body>
+</html>

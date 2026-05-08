@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DB Project - 시작 화면</title>
+  <link rel="stylesheet" href="/assets/css/index.css">
+</head>
+<body>
+
+<!-- 네비게이션 -->
+<nav>
+  <div class="nav-logo">DB Project</div>
+  <ul class="nav-links">
+    <li><a href="#features">기능</a></li>
+    <li><a href="#cta">시작</a></li>
+  </ul>
+  <div class="nav-actions">
+    <a href="/login.html" class="btn-login">로그인</a>
+    <a href="/login.html" class="btn-start">프로젝트 시작</a>
+  </div>
+</nav>
+
+<!-- 히어로 -->
+<section class="hero">
+  <div class="hero-text">
+    <span class="hero-badge">✦ 데이터 중심 개발 워크플로우</span>
+    <h1>DB 프로젝트를<br>정돈된 흐름으로</h1>
+    <p>스키마 설계부터 쿼리 실행, 트랜잭션 추적, API 연동까지.<br>프로젝트의 데이터 레이어를 한곳에서 관리하세요.</p>
+    <div class="hero-buttons">
+      <a href="/login.html" class="btn-hero-primary">대시보드로 이동</a>
+      <a href="#features" class="btn-hero-secondary">기능 둘러보기</a>
+    </div>
+  </div>
+
+  <div class="hero-mockup">
+    <div class="mockup-wrapper">
+      <!-- 메인 폰 목업 -->
+      <div class="phone">
+        <div class="phone-screen">
+          <div class="phone-header">DB Console · Production</div>
+          <div class="phone-card">
+            <div class="phone-card-label">Active Connections</div>
+            <div class="phone-card-value">24</div>
+          </div>
+          <div class="phone-card phone-card-expense">
+            <div class="phone-card-label">Slow Queries</div>
+            <div class="phone-card-value">3</div>
+          </div>
+          <div class="phone-card phone-card-balance">
+            <div class="phone-card-label">Migrations</div>
+            <div class="phone-card-value">Up to date</div>
+          </div>
+          <div class="phone-row">
+            <span>SELECT * FROM users</span>
+            <span class="phone-row-income">12ms</span>
+          </div>
+          <div class="phone-row">
+            <span>INSERT transactions</span>
+            <span class="phone-row-income">8ms</span>
+          </div>
+          <div class="phone-row">
+            <span>UPDATE accounts</span>
+            <span class="phone-row-expense">412ms</span>
+          </div>
+          <div class="phone-row">
+            <span>ROLLBACK</span>
+            <span class="phone-row-expense">Error</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 통계 -->
+<div class="stats">
+  <div class="stat-item">
+    <div class="stat-value">명확한</div>
+    <div class="stat-label">스키마 &amp; 규칙</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-value">빠른</div>
+    <div class="stat-label">쿼리 검증</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-value">안전한</div>
+    <div class="stat-label">접근 &amp; 감사</div>
+  </div>
+</div>
+
+<!-- 기능 소개 -->
+<section class="features" id="features">
+  <h2 class="section-title">DB 프로젝트를 위한 기본기</h2>
+  <p class="section-sub">설계 · 실행 · 추적 · 연동을 하나의 흐름으로</p>
+  <div class="feature-grid">
+    <div class="feature-card">
+      <div class="feature-icon">🧩</div>
+      <h3>스키마 중심 설계</h3>
+      <p>테이블/인덱스/관계를 기준으로 스키마를 정리하고 일관된 규칙으로 유지합니다.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">⚙️</div>
+      <h3>쿼리 실행 &amp; 검증</h3>
+      <p>자주 쓰는 쿼리를 템플릿으로 관리하고, 실행 결과를 빠르게 확인할 수 있어요.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🧾</div>
+      <h3>트랜잭션 추적</h3>
+      <p>실패/지연 이벤트를 중심으로 원인을 찾고, 데이터 변경 흐름을 추적합니다.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🔌</div>
+      <h3>API 연동</h3>
+      <p>서비스 레이어와 연결해 DB 기능을 API로 노출하고, 프로젝트 구조를 깔끔히 유지해요.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta" id="cta">
+  <h2>지금, 데이터 레이어부터 정리해요</h2>
+  <p>로그인 후 대시보드에서 프로젝트를 바로 시작할 수 있어요.</p>
+  <a href="/login.html" class="btn-hero-primary">로그인하고 시작하기</a>
+</section>
+
+<footer>
+  <p>&copy; 2026 DB Project. All rights reserved.</p>
+</footer>
+
+<script src="/assets/js/index.js"></script>
+</body>
+</html>
